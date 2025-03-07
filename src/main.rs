@@ -96,7 +96,44 @@ impl Solution {
         vec![repeated, missing]
     }
 
+    pub fn find_primes_to_n(g: i32) -> Vec<i32> {
+        let mut primes = vec![];
+        let mut is_prime = vec![true; g as usize + 1];
+        is_prime[0] = false;
+        is_prime[1] = false;
 
+        for i in 2..=g {
+            if is_prime[i as usize] {
+                primes.push(i);
+                let mut j = i as u64 * i as u64;
+                while j <= g as u64 {
+                    is_prime[j as usize] = false;
+                    j += i as u64;
+                }
+            }
+        }
+
+        primes
+    }
+
+    pub fn closest_primes(left: i32, right: i32) -> Vec<i32> {
+        let primes = Solution::find_primes_to_n(right)
+            .iter()
+            .filter(|&x| *x >= left)
+            .copied()
+            .collect::<Vec<i32>>();
+        let diff = primes
+            .windows(2)
+            .map(|w| w[1] - w[0])
+            .enumerate()
+            .min_by_key(|(_, x)| *x)
+            .unwrap_or((0usize, -1));
+
+        if diff.1 == -1 {
+            return vec![-1, -1];
+        }
+        vec![primes[diff.0], primes[diff.0 + 1]]
+    }
 }
 
 fn main() {}
@@ -165,5 +202,39 @@ mod tests {
             ]),
             vec![8, 24]
         );
+    }
+
+    #[test]
+    fn test_find_primes_to_n() {
+        fn get_primes_to_n(n: u64) -> Vec<u64> {
+            let mut primes: Vec<u64> = vec![];
+            for num in 2..=n {
+                let mut is_prime = true;
+                for i in 2..num {
+                    if num % i == 0 {
+                        is_prime = false;
+                        break;
+                    }
+                }
+                if is_prime {
+                    primes.push(num);
+                }
+            }
+            primes
+        }
+
+        assert_eq!(Solution::find_primes_to_n(10), vec![2, 3, 5, 7]);
+        assert_eq!(
+            Solution::find_primes_to_n(20),
+            vec![2, 3, 5, 7, 11, 13, 17, 19]
+        );
+    }
+
+    #[test]
+    fn test_closest_primes() {
+        // assert_eq!(Solution::closest_primes(2, 10), vec![2, 3]);
+        // assert_eq!(Solution::closest_primes(8, 20), vec![11, 13]);
+        // assert_eq!(Solution::closest_primes(11, 20), vec![11, 13]);
+        assert_eq!(Solution::closest_primes(12854, 130337), vec![23, 29]);
     }
 }
