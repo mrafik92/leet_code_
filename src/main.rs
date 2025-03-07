@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 struct Solution {}
 
+#[allow(dead_code)]
 impl Solution {
     pub fn check_pwr(mut n: i32) -> bool {
         let mut s = String::new();
@@ -97,21 +98,36 @@ impl Solution {
     }
 
     pub fn find_primes_to_n(g: i32) -> Vec<i32> {
+        // Early return for small values
+        if g <= 1 {
+            return vec![];
+        }
+        
+        let g_usize = g as usize;
         let mut primes = vec![];
-        let mut is_prime = vec![true; g as usize + 1];
+        let mut is_prime = vec![true; g_usize + 1];
         is_prime[0] = false;
         is_prime[1] = false;
 
-        for i in 2..=g {
-            if is_prime[i as usize] {
-                primes.push(i);
-                let mut j = i as u64 * i as u64;
-                while j <= g as u64 {
-                    is_prime[j as usize] = false;
-                    j += i as u64;
+        // Only need to check up to sqrt(g)
+        let sqrt_g = (g as f64).sqrt() as usize;
+        
+        for i in 2..=sqrt_g {
+            if is_prime[i] {                // Mark all multiples as non-prime
+                let mut j = i * i;
+                while j <= g_usize {
+                    is_prime[j] = false;
+                    j += i;
                 }
             }
         }
+
+        for i in 2..=g_usize {
+            if is_prime[i] {
+                primes.push(i as i32);
+            }
+        }
+
 
         primes
     }
@@ -206,23 +222,6 @@ mod tests {
 
     #[test]
     fn test_find_primes_to_n() {
-        fn get_primes_to_n(n: u64) -> Vec<u64> {
-            let mut primes: Vec<u64> = vec![];
-            for num in 2..=n {
-                let mut is_prime = true;
-                for i in 2..num {
-                    if num % i == 0 {
-                        is_prime = false;
-                        break;
-                    }
-                }
-                if is_prime {
-                    primes.push(num);
-                }
-            }
-            primes
-        }
-
         assert_eq!(Solution::find_primes_to_n(10), vec![2, 3, 5, 7]);
         assert_eq!(
             Solution::find_primes_to_n(20),
@@ -235,6 +234,14 @@ mod tests {
         // assert_eq!(Solution::closest_primes(2, 10), vec![2, 3]);
         // assert_eq!(Solution::closest_primes(8, 20), vec![11, 13]);
         // assert_eq!(Solution::closest_primes(11, 20), vec![11, 13]);
-        assert_eq!(Solution::closest_primes(12854, 130337), vec![23, 29]);
+        assert_eq!(Solution::closest_primes(12854, 130337), vec![12917, 12919]);
+        assert_eq!(Solution::closest_primes(1, 1000000), vec![2, 3]);
+        assert_eq!(Solution::closest_primes(1000, 5000), vec![1019, 1021]);
+        assert_eq!(Solution::closest_primes(20000, 30000), vec![20021, 20023]);
+        assert_eq!(Solution::closest_primes(100000, 200000), vec![100151, 100153]);
+        assert_eq!(Solution::closest_primes(999000, 1000000), vec![999329, 999331]);
+        
+
+        
     }
 }
