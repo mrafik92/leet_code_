@@ -193,6 +193,36 @@ impl Solution {
 
         substrings
     }
+
+    // fix 1768
+    pub fn count_of_every_minimum_substring(s: String) -> i32 {
+        let mut left = 0;
+        let mut map = vec![0; 3];
+        let mut count = 0;
+        let len_s = s.len();
+        for (r,c ) in s.bytes().enumerate() {
+            map[(c - b'a') as usize] += 1;
+            while map[0] > 0 && map[1] > 0 && map[2] > 0 {
+                count += len_s - r;
+                map[(s.as_bytes()[left] - b'a') as usize] -= 1;
+                left += 1;
+            }
+        }
+        count as i32
+    }
+
+    // fixes 1768
+    pub fn last_pos_tracking(s: String) -> i32 {
+        let mut last_pos = vec![-1; 3];
+        let mut count = 0i32;
+
+        for (i, c) in s.bytes().enumerate() {
+            last_pos[(c - b'a') as usize] = i as i32;
+            count += 1 + last_pos.iter().min().unwrap();
+        }
+
+        count
+    }
 }
 
 fn main() {}
@@ -318,5 +348,10 @@ mod tests {
             Solution::count_of_super_constrained("buoeia".to_string(), 0),
             1
         );
+    }
+
+    #[test]
+    fn test_count_of_every_minimum_substring() {
+        assert_eq!(Solution::count_of_every_minimum_substring("aababc".to_string()), 4);
     }
 }
