@@ -1,6 +1,6 @@
 pub fn count_of_every_minimum_substring(s: String) -> i32 {
   let mut left = 0;
-  let mut map = vec![0; 3];
+  let mut map = [0; 3];
   let mut count = 0;
   let len_s = s.len();
   for (r, c) in s.bytes().enumerate() {
@@ -20,6 +20,6 @@ mod tests {
 
   #[test]
   pub fn test_count_of_every_minimum_substring() {
-    assert_eq!(count_of_every_minimum_substring("aabab".to_string()), 11);
+    assert_eq!(count_of_every_minimum_substring("aababc".to_string()), 4);
   }
 }
