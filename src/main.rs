@@ -1,3 +1,1 @@
-mod solution;
-
 fn main() {}
