@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 pub mod check_pwr;
 pub mod closest_primes;
 pub mod colored_cells;
