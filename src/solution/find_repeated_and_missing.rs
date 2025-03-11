@@ -6,9 +6,9 @@ pub fn find_repeated_and_missing(g: Vec<Vec<i32>>) -> Vec<i32> {
   let mut missing = 0;
   // iterate over the grid
 
-  for i in 0..g.len() {
-    for j in 0..g[i].len() {
-      let num = g[i][j] as usize;
+  for i in &g {
+    for &j in i {
+      let num = j as usize;
       let idx = num / 32;
       let bit = num % 32;
       if (occurence[idx] >> bit) & 1 == 1 {
@@ -26,7 +26,7 @@ pub fn find_repeated_and_missing(g: Vec<Vec<i32>>) -> Vec<i32> {
         continue;
       }
       if (num >> j) & 1 == 0 {
-        missing = (i * 32 + j) as i32;
+        missing = i * 32 + j;
         break;
       }
     }
