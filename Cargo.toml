@@ -3,4 +3,19 @@ name = "leet_code_rust"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "init_leetcode_problem"
+path = "src/scripts/init_leetcode_problem.rs"
+
+[lib]
+name = "leet_code_rust"
+path = "src/solution/mod.rs"
+
+
 [dependencies]
+clap = { version = "4.0", features = ["derive"] }
+regex = "1.0"
+reqwest = { version = "0.11", features = ["blocking", "json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+scraper = "0.13"
