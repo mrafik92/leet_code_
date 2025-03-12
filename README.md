@@ -25,3 +25,9 @@ Make sure you have [Rust](https://www.rust-lang.org/tools/install) installed. Yo
 
 ```bash
 cargo build
+````
+## Creating a New Solution
+
+```bash
+cargo run --bin init_leetcode_problem -- --link https://leetcode.com/problems/maximum-count-of-positive-integer-and-negative-integer
+```
