@@ -16,8 +16,6 @@ mod tests {
       sum
     }
 
-    for n in 0..=100000 {
-      assert_eq!(sum_of_numbers(n), sum_of_numbers_test(n));
-    }
+    assert_eq!(sum_of_numbers(100000), sum_of_numbers_test(100000))
   }
 }

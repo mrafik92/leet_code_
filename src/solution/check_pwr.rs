@@ -15,8 +15,8 @@ mod tests {
 
   #[test]
   pub fn test_check_pwr() {
-    assert_eq!(check_pwr(27), true);
-    assert_eq!(check_pwr(9), true);
-    assert_eq!(check_pwr(45), false);
+    assert!(check_pwr(27));
+    assert!(check_pwr(9));
+    assert!(!check_pwr(45));
   }
 }
