@@ -97,7 +97,7 @@ fn fetch_problem_details(slug: &str) -> Result<Question, String> {
     let mut error_messages: String = "".to_string();
     if let Some(errors) = graphql_resp.errors {
       for error in &errors {
-        error_messages += &format!("{}", error.message);
+        error_messages += &error.message.to_string();
       }
     }
 
