@@ -60,7 +60,7 @@ pub fn maximum_count(nums: Vec<i32>) -> i32 {
     Some((i, _)) => (i + 1usize) as i32,
     None => -1,
   };
-  pos.max(neg) as i32
+  pos.max(neg)
 }
 
 pub fn find_lower_upper_bound(nums: &Vec<i32>) -> (i32, i32) {
@@ -80,7 +80,7 @@ pub fn find_lower_upper_bound(nums: &Vec<i32>) -> (i32, i32) {
       println!(" -> lower_bound: {}", lower_bound);
     } else {
       // nums[mid] >= 0
-      right = (mid as i32 - 1) as i32;
+      right = mid as i32 - 1;
       upper_bound = mid as i32;
       println!(" -> upper_bound: {}", upper_bound);
     }
@@ -99,8 +99,8 @@ pub fn find_first_positive(nums: &Vec<i32>) -> i32 {
     print!("left: {}, right: {}", left, right);
     let mid = (left + right) / 2;
     if nums[mid as usize] > 0 {
-      right = (mid as i32 - 1) as i32;
-      first_positive = mid as i32;
+      right = mid - 1;
+      first_positive = mid;
       println!(" -> first_positive: {}", first_positive);
     } else {
       left = mid + 1;
