@@ -88,7 +88,7 @@ pub fn find_lower_upper_bound(nums: &Vec<i32>) -> (i32, i32) {
   (lower_bound, upper_bound)
 }
 
-pub fn find_first_positive(nums: &Vec<i32>) -> i32 {
+pub fn find_first_positive_traditional(nums: &Vec<i32>) -> i32 {
   let mut left = 0;
   let mut right = (nums.len() - 1) as i32;
   let mut first_positive = -1;
@@ -106,6 +106,31 @@ pub fn find_first_positive(nums: &Vec<i32>) -> i32 {
     }
   }
   first_positive
+}
+
+pub fn find_first_positive_meugel(nums: &Vec<i32>, n: i32) -> i32 {
+
+  if nums.last().unwrap() < &n {
+    return -1;
+  }
+
+  let mut ok = nums.len() as i32;
+  let mut ng = -1;
+
+  while i32::abs(ok - ng) > 1 {
+    let mid = (ok + ng) / 2;
+    if nums[mid as usize] > n {
+      ok = mid;
+    } else {
+      ng = mid;
+    }
+  }
+
+  ok
+}
+
+pub fn find_first_positive(nums: &Vec<i32>) -> i32 {
+  find_first_positive_meugel(nums, 0)
 }
 
 pub fn maximum_count_with_binary_search(nums: Vec<i32>) -> i32 {
@@ -215,5 +240,20 @@ mod tests {
     assert_eq!(find_first_positive(&vec![1, 2, 3]), 0);
     assert_eq!(find_first_positive(&vec![-1, -2, -3]), -1);
     assert_eq!(find_first_positive(&vec![-1, 0, 1]), 2);
+    assert_eq!(find_first_positive(&vec![-1, 0,0,0,0,0,0,0,0, 1]), 9);
+    assert_eq!(find_first_positive(&vec![-1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,2,3,4,5]), 9);
+  }
+
+  #[test]
+  fn test_find_first_zero() {
+    assert_eq!(find_first_positive_meugel(&vec![-1, 0, 1], -1), 1);
+    assert_eq!(find_first_positive_meugel(&vec![-1, 0, 0, 0, 0, 1], -1), 1);
+    assert_eq!(find_first_positive_meugel(&vec![-3, -2, -1, 0, 0, 0, 0, 1], -1), 3);
+    assert_eq!(find_first_positive_meugel(&vec![-5, -4], -1), -1);
+    assert_eq!(find_first_positive_meugel(&vec![1, 2, 3], -1), 0);
+    assert_eq!(find_first_positive_meugel(&vec![-1, -2, -3], -1), -1);
+    assert_eq!(find_first_positive_meugel(&vec![-1, -2, -3, 5], -1), 3);
+    assert_eq!(find_first_positive_meugel(&vec![-1, -1, -1, -1, -1, 0, 0, 0, 0, 1], -1), 5);
+    assert_eq!(find_first_positive_meugel(&vec![-1, -1, -1, -1, -1, 0, 0, 0, 0, 1], 0), 9);
   }
 }
