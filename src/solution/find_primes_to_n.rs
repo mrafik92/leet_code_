@@ -65,6 +65,7 @@ mod tests {
     );
   }
 
+  #[test]
   pub fn test_find_primes_to_n_1000() {
     assert_eq!(
       find_primes_to_n(1000),
