@@ -93,8 +93,8 @@ pub fn min_zero_array(nums: Vec<i32>, queries: Vec<Vec<i32>>) -> i32 {
     let mut sum = 0;
     let mut difference_array = vec![0; n + 1];
 
-    for i in 0..k {
-      let (s, e, v) = (queries[i][0], queries[i][1], queries[i][2]);
+    for i in queries.iter().take(k) {
+      let (s, e, v) = (i[0], i[1], i[2]);
       difference_array[s as usize] += v;
       difference_array[e as usize + 1usize] -= v;
     }
