@@ -146,24 +146,17 @@ fn main() {
   };
 
   // Convert HTML description to plain text and replace (Unicode NBSP) with normal space.
-  let description = html_to_text(&question.content).replace('\u{a0}', " ");
-  let examples = question.example_test_cases.unwrap_or_default();
+  let _description = html_to_text(&question.content).replace('\u{a0}', " ");
+  let _examples = question.example_test_cases.unwrap_or_default();
 
   let header = format!(
     "/**
 LeetCode Problem {}: {}
 Link: {}
 Difficulty: {}
-
-Description:
-{}
-
-Examples:
-{}
 **/
 ",
-    question.question_id, question.title, args.link, question.difficulty, description, examples,
-  );
+    question.question_id, question.title, args.link, question.difficulty);
 
   let fn_name = slug_to_function_name(&slug);
   let function_stub = format!(
