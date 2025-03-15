@@ -5,7 +5,7 @@
 */
 
 pub fn maximum_candies(candies: Vec<i32>, k: i64) -> i32 {
-  fn can_allocate(candies: &Vec<i32>, k: i64, mid: i64) -> bool {
+  fn can_allocate(candies: &[i32], k: i64, mid: i64) -> bool {
     candies.iter().map(|&n| n as i64 / mid).sum::<i64>() >= k
   }
 
