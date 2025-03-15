@@ -7,6 +7,7 @@ pub mod count_of_every_minimum_substring;
 pub mod count_of_super_constrained;
 pub mod find_primes_to_n;
 pub mod find_repeated_and_missing;
+pub mod house_robber_iv;
 pub mod maximum_candies_allocated_to_k_children;
 pub mod maximum_count_of_positive_integer_and_negative_integer;
 pub mod merge_arrays;
