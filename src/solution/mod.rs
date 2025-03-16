@@ -13,3 +13,4 @@ pub mod maximum_count_of_positive_integer_and_negative_integer;
 pub mod merge_arrays;
 pub mod sum_of_numbers;
 pub mod zero_array_transformation_ii;
+pub mod minimum_time_to_repair_cars;
