@@ -156,7 +156,8 @@ Link: {}
 Difficulty: {}
 **/
 ",
-    question.question_id, question.title, args.link, question.difficulty);
+    question.question_id, question.title, args.link, question.difficulty
+  );
 
   let fn_name = slug_to_function_name(&slug);
   let function_stub = format!(

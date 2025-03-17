@@ -128,7 +128,7 @@ pub fn find_first_positive_meugel(nums: &[i32], n: i32) -> i32 {
   ok
 }
 
-pub fn find_first_positive(nums: &Vec<i32>) -> i32 {
+pub fn find_first_positive(nums: &[i32]) -> i32 {
   find_first_positive_meugel(nums, 0)
 }
 
