@@ -10,6 +10,7 @@ pub mod divide_array_into_equal_pairs;
 pub mod find_primes_to_n;
 pub mod find_repeated_and_missing;
 pub mod house_robber_iv;
+pub mod longest_nice_subarray;
 pub mod maximum_candies_allocated_to_k_children;
 pub mod maximum_count_of_positive_integer_and_negative_integer;
 pub mod merge_arrays;
