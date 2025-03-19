@@ -14,6 +14,7 @@ pub mod longest_nice_subarray;
 pub mod maximum_candies_allocated_to_k_children;
 pub mod maximum_count_of_positive_integer_and_negative_integer;
 pub mod merge_arrays;
+pub mod minimum_operations_to_make_binary_array_elements_equal_to_one_i;
 pub mod minimum_time_to_repair_cars;
 pub mod sum_of_numbers;
 pub mod zero_array_transformation_ii;
