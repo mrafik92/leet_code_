@@ -9,13 +9,18 @@ use std::fs::{File, create_dir_all};
 use std::io::Write;
 use std::path::Path;
 
-/// A tool to fetch a LeetCode problem and create a Rust stub in src/solution.
+/// A tool to fetch a LeetCode problem and create a Rust stub in src/solution or a subfolder.
 #[derive(Parser, Debug)]
 #[command(author, version, about)]
 struct Args {
   /// LeetCode problem link (e.g. https://leetcode.com/problems/count-total-number-of-colored-cells/)
   #[arg(long)]
   link: String,
+
+  /// Subfolder name (child of solution) in which to create the rust file and update mod.rs.
+  /// If not provided, the file is created in src/solution.
+  #[arg(short, long)]
+  folder: Option<String>,
 }
 
 fn extract_slug_from_link(link: &str) -> Result<String, String> {
@@ -170,14 +175,19 @@ Difficulty: {}
 
   let file_content = format!("{}\n{}", header, function_stub);
 
-  // Determine the output file path: src/solution/<filename>
-  let output_dir = Path::new("src").join("solution");
+  // Determine the output directory. If a folder is provided, create the file in solution/<folder>.
+  let output_dir = if let Some(ref folder) = args.folder {
+    Path::new("src").join("solution").join(folder)
+  } else {
+    Path::new("src").join("solution")
+  };
+
   if let Err(e) = create_dir_all(&output_dir) {
     eprintln!("Error creating directory {:?}: {}", output_dir, e);
     return;
   }
   let filename = slug_to_filename(&slug);
-  let file_path = output_dir.join(filename);
+  let file_path = output_dir.join(&filename);
 
   if file_path.exists() {
     eprintln!(
@@ -198,8 +208,17 @@ Difficulty: {}
     Err(e) => eprintln!("Error creating file {:?}: {}", file_path, e),
   }
 
-  // append the file name to mod.rs
-  let mod_path = Path::new("src").join("solution").join("mod.rs");
+  // Determine the mod.rs file path in the output directory.
+  let mod_path = output_dir.join("mod.rs");
+
+  // If mod.rs does not exist, create it.
+  if !mod_path.exists() {
+    if let Err(e) = File::create(&mod_path) {
+      eprintln!("Error creating mod.rs at {:?}: {}", mod_path, e);
+      return;
+    }
+  }
+
   let mut mod_file = match File::options().append(true).open(&mod_path) {
     Ok(f) => f,
     Err(e) => {

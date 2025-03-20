@@ -5,7 +5,6 @@ Difficulty: Medium
 **/
 
 pub fn min_operations(mut nums: Vec<i32>) -> i32 {
-
   use std::cell::Cell;
   let mut operations = 0;
 
@@ -19,9 +18,9 @@ pub fn min_operations(mut nums: Vec<i32>) -> i32 {
     }
   }
 
-  match nums.iter().rev().take(2).any(|&x| { x == 0 }) {
+  match nums.iter().rev().take(2).any(|&x| x == 0) {
     true => -1,
-    false => operations
+    false => operations,
   }
 }
 
@@ -30,7 +29,7 @@ mod tests {
   use super::*;
   #[test]
   fn test_min_operations() {
-    assert_eq!(min_operations(vec![0,1,1,1,0,0]), 3);
-    assert_eq!(min_operations(vec![0,1,1,1]), -1);
+    assert_eq!(min_operations(vec![0, 1, 1, 1, 0, 0]), 3);
+    assert_eq!(min_operations(vec![0, 1, 1, 1]), -1);
   }
 }

@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 #![allow(clippy::empty_line_after_doc_comments)]
 
+mod array;
 pub mod check_pwr;
 pub mod closest_primes;
 pub mod colored_cells;
