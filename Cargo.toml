@@ -9,7 +9,7 @@ path = "src/scripts/init_leetcode_problem.rs"
 
 [lib]
 name = "leet_code_rust"
-path = "src/solution/daily/mod.rs"
+path = "src/solution/mod.rs"
 
 
 [dependencies]
