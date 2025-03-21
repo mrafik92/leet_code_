@@ -8,6 +8,7 @@ use serde_json::json;
 use std::fs::{File, create_dir_all};
 use std::io::Write;
 use std::path::Path;
+use std::process::Command;
 
 /// A tool to fetch a LeetCode problem and create a Rust stub in src/solution or a subfolder.
 #[derive(Parser, Debug)]
@@ -230,5 +231,29 @@ Difficulty: {}
   // Append the new file name to mod.rs
   if let Err(e) = writeln!(mod_file, "pub mod {};", slug_to_modulename(&slug)) {
     eprintln!("Error writing to mod.rs: {}", e);
+  }
+
+  // New actions after file creation:
+  let fmt_status = Command::new("cargo")
+    .arg("fmt")
+    .status()
+    .unwrap_or_else(|e| {
+      eprintln!("Failed to run cargo fmt: {}", e);
+      std::process::exit(1);
+    });
+  if !fmt_status.success() {
+    eprintln!("cargo fmt failed");
+  }
+
+  let git_status = Command::new("git")
+    .arg("add")
+    .arg(file_path.to_str().unwrap())
+    .status()
+    .unwrap_or_else(|e| {
+      eprintln!("Failed to run git add: {}", e);
+      std::process::exit(1);
+    });
+  if !git_status.success() {
+    eprintln!("git add failed");
   }
 }
