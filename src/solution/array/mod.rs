@@ -1,6 +1,3 @@
-#![allow(dead_code)]
-#![allow(clippy::empty_line_after_doc_comments)]
-
 pub mod best_time_to_buy_and_sell_stock;
 pub mod best_time_to_buy_and_sell_stock_ii;
 pub mod majority_element;
